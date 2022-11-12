@@ -50,3 +50,31 @@ Untracked files:
 
 ```
 
+## GIT 相关 bug
+
+###  提交代码出现错误代码：10054
+
+* 问题描述：
+
+将代码推向指定仓库时出现的错误：
+
+> fatal: unable to access 'https://github.com/MartinFJ13713/work_as_a_java_developer.git/': OpenSSL SSL_read: Connection was reset, errno 10054
+
+原因 登录 github 存在权限校验问题 
+
+解决方法，提交代码之前，在git bash 命令行中 加入一个参数设置
+
+```bash
+$ git config --global http.sslVerify "false"
+```
+
+关闭 代码提交的权限检查
+
+在idea中在 github 相关设置中添加当前用户账户即可
+
+<img src="https://img-blog.csdnimg.cn/20210520220746363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RnOTI4NjAwNzc0,size_16,color_FFFFFF,t_70" alt="img" style="zoom:67%;" />
+
+之后 通过浏览器登录jetbrains设置对应的 git 账户
+
+<img src="https://img-blog.csdnimg.cn/20210520214601505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RnOTI4NjAwNzc0,size_16,color_FFFFFF,t_70" alt="img" style="zoom:67%;" />
+
