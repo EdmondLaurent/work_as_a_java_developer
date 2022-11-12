@@ -78,3 +78,27 @@ $ git config --global http.sslVerify "false"
 
 <img src="https://img-blog.csdnimg.cn/20210520214601505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RnOTI4NjAwNzc0,size_16,color_FFFFFF,t_70" alt="img" style="zoom:67%;" />
 
+### 当前提交的代码版本落后于仓库中的版本 
+
+* 问题描述 
+
+使用命令 `git reset  --hard `回退到某个版本之后重新向仓库中提交内容 （让回退的版本变成最新的版本）在代码远程提交的时候出现问题：
+
+> To https://github.com/MartinFJ13713/work_as_a_java_developer.git
+>  ! [rejected]        master -> master (non-fast-forward)
+> error: failed to push some refs to 'https://github.com/MartinFJ13713/work_as_a_java_developer.git'
+> hint: Updates were rejected because the tip of your current branch is behind
+
+应该是git 在当前工作空间中负责控制版本的指针与仓库中的不一致 ，代码中有冲突的内容 `需要强行 merge`
+解决方案：使用本地的内容强行替换代码仓库中的内容
+
+使用命令：
+
+```bash 
+$ git push -u origin master -f
+```
+
+将当前 暂存区中的内容提交并覆盖远程仓库的内容
+
+代码参考：[hint: Updates were rejected because the tip of your current branch is behind(github上的版本和本地版本冲突的解决方法)_NPException的博客-CSDN博客](https://blog.csdn.net/qq_36850813/article/details/86738720)
+
