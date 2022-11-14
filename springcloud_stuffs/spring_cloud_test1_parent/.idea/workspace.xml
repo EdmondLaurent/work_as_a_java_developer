@@ -61,7 +61,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cloud-provider-payment8002/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.16125" />
     <property name="project.structure.side.proportion" value="0.14306152" />
@@ -186,6 +186,7 @@
       <workItem from="1667712726102" duration="4584000" />
       <workItem from="1667730075667" duration="197000" />
       <workItem from="1668425041598" duration="953000" />
+      <workItem from="1668426213585" duration="333000" />
     </task>
     <task id="LOCAL-00001" summary="1.eureka作为服务注册中心的案例">
       <created>1668425839227</created>
