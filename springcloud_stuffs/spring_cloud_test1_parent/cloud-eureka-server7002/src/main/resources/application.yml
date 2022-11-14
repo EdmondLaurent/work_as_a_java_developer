@@ -1,0 +1,13 @@
+server:
+  port: 7002
+
+eureka:
+  instance:
+    hostname: eureka7002.com
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+      # （服务注册中心）配置 集群中除本身以外的所有注册中心节点地址 多个节点地址 用 逗号隔开
+      # 定义的地址信息最好基于域名或主机名 进行配置

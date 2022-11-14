@@ -1,0 +1,29 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: cloud-payment-service
+  # 数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1018
+
+# 作为客户端注册到 eureka 的相关配置
+eureka:
+  client:
+    register-with-eureka: true    # 当前应用作为客户端注册到 eureka中
+    fetchRegistry: true   # 在集群部署的环境下 每个 服务都需要从注册中心抓取服务列表
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 1      # eureka  客户端像服务器发送心跳的时间间隔 默认单位为 秒
+    lease-expiration-duration-in-seconds: 2       # eureka 服务端收到心跳之后的最长等待时间
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.glaway.springcloud.entities
+
