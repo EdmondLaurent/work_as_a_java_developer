@@ -15,6 +15,8 @@
         <module>cloud-eureka-server7002</module>
         <module>cloud-provider-payment8002</module>
         <module>cloud-provider-payment8004</module>
+        <module>cloud-consul-provider8006</module>
+        <module>cloud-consul-consumer80</module>
     </modules>
     <packaging>pom</packaging>
 
