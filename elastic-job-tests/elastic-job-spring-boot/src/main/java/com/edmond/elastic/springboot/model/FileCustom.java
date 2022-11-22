@@ -13,7 +13,7 @@ import java.sql.SQLException;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileCustom implements Serializable , RowMapper {
+public class FileCustom implements Serializable  {
     /**
      * 标识
      */
@@ -46,8 +46,4 @@ public class FileCustom implements Serializable , RowMapper {
         this.content = content;
     }
 
-    @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return null;
-    }
 }

@@ -7,24 +7,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * æ‰§è¡Œ å®šæ—¶ä»»åŠ¡elastic-job çš„æ³¨å†Œä¸­å¿ƒ
+ * Ö´ĞĞ ¶¨Ê±ÈÎÎñelastic-job µÄ×¢²áÖĞĞÄ
  */
 @Configuration
 public class ElasticJobRegistryCenterConfig {
 
-    //zookeeperé“¾æ¥å­—ç¬¦ä¸² localhost:2181
+    //zookeeperÁ´½Ó×Ö·û´® localhost:2181
     private String ZOOKEEPER_CONNECTION_STRING = "localhost:2181";
-    //å®šæ—¶ä»»åŠ¡å‘½åç©ºé—´
+    //¶¨Ê±ÈÎÎñÃüÃû¿Õ¼ä
     private String JOB_NAMESPACE = "elastic-job-example-java";
 
     @Bean(initMethod = "init")
     public CoordinatorRegistryCenter setUpRegistryCenter() {
-        //  æ–°å»ºä¸€ä¸ª zookeeper é…ç½®
+        //  ĞÂ½¨Ò»¸ö zookeeper ÅäÖÃ
         ZookeeperConfiguration zookeeperConfiguration = new ZookeeperConfiguration(ZOOKEEPER_CONNECTION_STRING, JOB_NAMESPACE);
-        //  åˆ›å»ºæ³¨å†Œä¸­å¿ƒ
-        ZookeeperRegistryCenter zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfiguration);
 
-        //  initMethod æ ‡æ˜äº†å½“å‰beanåœ¨åˆ›å»ºçš„æ—¶å€™ è‡ªåŠ¨è°ƒç”¨ initæ–¹æ³•
+        //  ÉèÖÃ zookeeper ³¬Ê±Ê±¼ä
+        zookeeperConfiguration.setSessionTimeoutMilliseconds(5000);
+
+        //  ´´½¨×¢²áÖĞĞÄ
+        CoordinatorRegistryCenter zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfiguration);
+
+        //  initMethod ±êÃ÷ÁËµ±Ç°beanÔÚ´´½¨µÄÊ±ºò ×Ô¶¯µ÷ÓÃ init·½·¨
         return zookeeperRegistryCenter;
     }
 

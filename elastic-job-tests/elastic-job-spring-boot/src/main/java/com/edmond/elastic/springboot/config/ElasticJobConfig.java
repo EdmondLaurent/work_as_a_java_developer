@@ -5,6 +5,7 @@ import com.dangdang.ddframe.job.api.simple.SimpleJob;
 import com.dangdang.ddframe.job.config.JobCoreConfiguration;
 import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
 import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
+import com.dangdang.ddframe.job.event.rdb.JobEventRdbConfiguration;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
 import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class ElasticJobConfig {
@@ -28,6 +31,10 @@ public class ElasticJobConfig {
     //  DataFlow 数据流定时任务
     @Autowired
     private FileBackupJobFlow fileBackupJobFlow;
+
+    //  自动注入数据源
+    @Autowired
+    private DataSource dataSource;
 
     /**
      * 创建LiteJobConfiguration
@@ -84,6 +91,7 @@ public class ElasticJobConfig {
         DataflowJobConfiguration dataflowJobConfiguration = new DataflowJobConfiguration(jobCoreConfiguration, jobClass.getCanonicalName(), true);
         //  创建 LiteJobConfiguration
         LiteJobConfiguration liteJobConfiguration = LiteJobConfiguration.newBuilder(dataflowJobConfiguration)
+                .jobShardingStrategyClass("com.dangdang.ddframe.job.lite.api.strategy.impl.AverageAllocationJobShardingStrategy")
                 .overwrite(true).build();
         return liteJobConfiguration;
     }
@@ -91,10 +99,15 @@ public class ElasticJobConfig {
     @Bean(initMethod = "init")
     public SpringJobScheduler initElasticJob() {
         //  创建 SpringJobScheduler
+        JobEventRdbConfiguration jobEventRdbConfiguration = new JobEventRdbConfiguration(dataSource);
         //  参数：ElasticJob elasticJob, CoordinatorRegistryCenter regCenter, LiteJobConfiguration jobConfig, JobEventConfiguration jobEventConfig, ElasticJobListener... elasticJobListeners
         SpringJobScheduler springJobScheduler = new SpringJobScheduler(fileBackupJobDB, registryCenter,
                 //  设置 任务分片参数 （在本案例中根据需要备份的文件类型设置参数，不同分片的作业实例获取的文件类型是不同的）
-                createDataFlowJobConfiguration(fileBackupJobFlow.getClass(), "0/3 * * * * ?", 4, "0=text,1=image,2=radio,3=vedio"));
+                createDataFlowJobConfiguration(fileBackupJobDB.getClass(),
+                        "0/3 * * * * ?",
+                        4,
+                        "0=text,1=image,2=radio,3=vedio"),
+                jobEventRdbConfiguration);
         return springJobScheduler;
     }
 
