@@ -4,8 +4,16 @@ spring:
   cloud:
     config:
       uri: http://localhost:9010/         # 当前服务配置中心的地址
-      profile: default
+      profile: dev     # 拉取的是哪个环境下的配置文件
       label: master   # 从哪个分支拉取这个服务的配置
+      discovery:
+        enabled: true
+        service-id: config-client
+
 server:
   port: 9011
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:9001/eureka/
 

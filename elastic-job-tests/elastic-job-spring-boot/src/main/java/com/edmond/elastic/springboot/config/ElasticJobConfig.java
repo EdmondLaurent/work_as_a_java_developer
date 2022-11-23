@@ -98,12 +98,11 @@ public class ElasticJobConfig {
 
     @Bean(initMethod = "init")
     public SpringJobScheduler initElasticJob() {
-        //  创建 SpringJobScheduler
         JobEventRdbConfiguration jobEventRdbConfiguration = new JobEventRdbConfiguration(dataSource);
         //  参数：ElasticJob elasticJob, CoordinatorRegistryCenter regCenter, LiteJobConfiguration jobConfig, JobEventConfiguration jobEventConfig, ElasticJobListener... elasticJobListeners
         SpringJobScheduler springJobScheduler = new SpringJobScheduler(fileBackupJobDB, registryCenter,
                 //  设置 任务分片参数 （在本案例中根据需要备份的文件类型设置参数，不同分片的作业实例获取的文件类型是不同的）
-                createDataFlowJobConfiguration(fileBackupJobDB.getClass(),
+                createDataFlowJobConfiguration(fileBackupJobFlow.getClass(),
                         "0/3 * * * * ?",
                         4,
                         "0=text,1=image,2=radio,3=vedio"),

@@ -8,4 +8,8 @@ spring:
           uri: https://gitee.com/edmondlaurent/config-repo-demo/
 server:
   port: 9010
-
+# 配置服务配置中心高可用 （将当前服务配置中心注册到 eureka服务器中）
+eureka:
+  client:
+    serviceUrl:
+     defaultZone: http://127.0.0.1:9001/eureka/
